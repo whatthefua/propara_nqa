@@ -1,0 +1,542 @@
+Sentence: They are buried in sediment., participant: sediment
+True state change: [0], predicted: tensor([[0.6571, 0.1233, 0.0986, 0.1210]])
+Sentence: Bacteria is buried in the sediment., participant: sediment
+True state change: [0], predicted: tensor([[0.7877, 0.0317, 0.0741, 0.1065]])
+Sentence: Large amounts of sediment gradually pile on top of the original sediment., participant: sediment
+True state change: [0], predicted: tensor([[0.7577, 0.0919, 0.0292, 0.1212]])
+Sentence: The chemical structure of the buried sediment and plants changes., participant: plants
+True state change: [0], predicted: tensor([[0.6941, 0.1120, 0.1395, 0.0544]])
+Sentence: The chemical structure of the buried sediment and plants changes., participant: sediment
+True state change: [0], predicted: tensor([[0.7918, 0.0472, 0.1022, 0.0588]])
+Sentence: The sediment and plants are at least one mile underground., participant: plants
+True state change: [3], predicted: tensor([[0.7177, 0.0517, 0.0481, 0.1825]])
+Sentence: The sediment and plants are at least one mile underground., participant: sediment
+True state change: [3], predicted: tensor([[0.7566, 0.0447, 0.0507, 0.1479]])
+Sentence: More chemical changes happen and the buried material becomes oil., participant: oil
+True state change: [1], predicted: tensor([[0.0379, 0.9053, 0.0340, 0.0227]])
+Sentence: Algae and plankton die., participant: plankton
+True state change: [3], predicted: tensor([[0.1669, 0.1700, 0.4798, 0.1832]])
+Sentence: The dead algae and plankton end up part of sediment on a seafloor., participant: algae
+True state change: [2], predicted: tensor([[0.2931, 0.1593, 0.0681, 0.4796]])
+Sentence: The dead algae and plankton end up part of sediment on a seafloor., participant: plankton
+True state change: [2], predicted: tensor([[0.2182, 0.1953, 0.0445, 0.5421]])
+Sentence: The dead algae and plankton end up part of sediment on a seafloor., participant: sediment
+True state change: [0], predicted: tensor([[0.5169, 0.0989, 0.1020, 0.2823]])
+Sentence: The sediment breaks down., participant: sediment
+True state change: [0], predicted: tensor([[0.5549, 0.0509, 0.1944, 0.1997]])
+Sentence: The bottom layers of sediment become compacted by pressure., participant: sediment
+True state change: [0], predicted: tensor([[0.7794, 0.0491, 0.1077, 0.0639]])
+Sentence: Higher pressure causes the sediment to heat up., participant: sediment
+True state change: [0], predicted: tensor([[0.6015, 0.0565, 0.1311, 0.2109]])
+Sentence: The material becomes a liquid., participant: material
+True state change: [2], predicted: tensor([[0.1582, 0.0357, 0.7575, 0.0486]])
+Sentence: Is known as oil., participant: oil
+True state change: [0], predicted: tensor([[0.2585, 0.6205, 0.0575, 0.0635]])
+Sentence: A fuel goes into the generator., participant: fuel
+True state change: [3], predicted: tensor([[0.0865, 0.1641, 0.0549, 0.6944]])
+Sentence: The generator converts mechanical energy into electrical energy., participant: mechanical energy
+True state change: [2], predicted: tensor([[0.0277, 0.8041, 0.1474, 0.0207]])
+Sentence: The generator converts mechanical energy into electrical energy., participant: electrical energy
+True state change: [1], predicted: tensor([[0.0166, 0.9363, 0.0342, 0.0129]])
+Sentence: A magnet moves near a wire., participant: magnet
+True state change: [3], predicted: tensor([[0.3567, 0.2566, 0.0154, 0.3712]])
+Sentence: The sound continues to bounce off of things and produce echoes until it is totally absorbed or dissipated., participant: echoes
+True state change: [1], predicted: tensor([[0.5651, 0.0993, 0.2737, 0.0619]])
+Sentence: Some electricity becomes light., participant: electricity
+True state change: [0], predicted: tensor([[0.1849, 0.3164, 0.4528, 0.0459]])
+Sentence: Some electricity becomes light., participant: light
+True state change: [1], predicted: tensor([[0.0257, 0.9445, 0.0174, 0.0124]])
+Sentence: Some light becomes heat when it hits something., participant: light
+True state change: [0], predicted: tensor([[0.5044, 0.1540, 0.2618, 0.0798]])
+Sentence: Some light becomes heat when it hits something., participant: heat
+True state change: [1], predicted: tensor([[0.2490, 0.5459, 0.1339, 0.0712]])
+Sentence: Some electricity becomes motion in a hard drive, dvd drive or fan., participant: electricity
+True state change: [0], predicted: tensor([[0.5718, 0.2842, 0.0655, 0.0785]])
+Sentence: Some electricity becomes motion in a hard drive, dvd drive or fan., participant: motion
+True state change: [1], predicted: tensor([[0.0986, 0.8616, 0.0151, 0.0247]])
+Sentence: Motion energy also becomes heat., participant: heat
+True state change: [0], predicted: tensor([[0.0522, 0.8480, 0.0675, 0.0323]])
+Sentence: The moving water spins the turbines in the power plant., participant: turbines
+True state change: [0], predicted: tensor([[0.6399, 0.1231, 0.0718, 0.1652]])
+Sentence: The turbines turn the generators., participant: turbines
+True state change: [0], predicted: tensor([[0.3465, 0.0797, 0.1571, 0.4167]])
+Sentence: The turbines turn the generators., participant: generators
+True state change: [0], predicted: tensor([[0.4079, 0.1263, 0.1403, 0.3255]])
+Sentence: The generators spin, and produce electricity., participant: generators
+True state change: [0], predicted: tensor([[0.3924, 0.1175, 0.3899, 0.1002]])
+Sentence: The generators spin, and produce electricity., participant: electricity
+True state change: [1], predicted: tensor([[0.0322, 0.9247, 0.0196, 0.0235]])
+Sentence: A reservoir is formed., participant: reservoir
+True state change: [1], predicted: tensor([[0.1459, 0.7897, 0.0444, 0.0201]])
+Sentence: The collects water converting the water's from kinectic to potential., participant: water
+True state change: [0], predicted: tensor([[0.5508, 0.0784, 0.1107, 0.2601]])
+Sentence: The water is forced through a turbine under the reservoir., participant: reservoir
+True state change: [0], predicted: tensor([[0.8050, 0.0639, 0.0367, 0.0944]])
+Sentence: The water is forced through a turbine under the reservoir., participant: water
+True state change: [3], predicted: tensor([[0.0913, 0.0331, 0.0236, 0.8520]])
+Sentence: The water is forced through a turbine under the reservoir., participant: turbine
+True state change: [0], predicted: tensor([[0.2095, 0.5457, 0.0100, 0.2349]])
+Sentence: The turbine spins and so does the generator connected to it., participant: turbine
+True state change: [0], predicted: tensor([[0.7297, 0.0697, 0.0567, 0.1438]])
+Sentence: The turbine spins and so does the generator connected to it., participant: generator
+True state change: [3], predicted: tensor([[0.7865, 0.0644, 0.0395, 0.1097]])
+Sentence: The water's energy is turned into electrical energy., participant: water
+True state change: [3], predicted: tensor([[0.1044, 0.0425, 0.8189, 0.0341]])
+Sentence: The water's energy is turned into electrical energy., participant: water's energy
+True state change: [2], predicted: tensor([[0.1400, 0.0318, 0.7855, 0.0427]])
+Sentence: The water's energy is turned into electrical energy., participant: electrical energy
+True state change: [1], predicted: tensor([[0.0200, 0.9475, 0.0206, 0.0118]])
+Sentence: The transformer converts electrical energy from the generator to a high voltage., participant: generator
+True state change: [0], predicted: tensor([[0.3572, 0.1647, 0.1492, 0.3290]])
+Sentence: The transformer converts electrical energy from the generator to a high voltage., participant: electrical energy
+True state change: [2], predicted: tensor([[0.0486, 0.8102, 0.0361, 0.1052]])
+Sentence: Fuel produces heat., participant: heat
+True state change: [1], predicted: tensor([[0.1051, 0.6786, 0.1424, 0.0739]])
+Sentence: Water is boiled to make steam., participant: steam
+True state change: [1], predicted: tensor([[0.0510, 0.8759, 0.0362, 0.0369]])
+Sentence: Steam spins turbine., participant: turbine
+True state change: [0], predicted: tensor([[0.0855, 0.7805, 0.0762, 0.0578]])
+Sentence: Makes electricity., participant: electricity
+True state change: [1], predicted: tensor([[0.0528, 0.8375, 0.0587, 0.0509]])
+Sentence: Produces the correct voltage., participant: voltage
+True state change: [1], predicted: tensor([[0.6251, 0.1596, 0.0546, 0.1606]])
+Sentence: The uranium atoms are split (fission) to produce heat., participant: uranium atoms
+True state change: [2], predicted: tensor([[0.4712, 0.0431, 0.4146, 0.0711]])
+Sentence: The uranium atoms are split (fission) to produce heat., participant: heat
+True state change: [1], predicted: tensor([[0.0900, 0.8445, 0.0338, 0.0317]])
+Sentence: The heat is used to turn water into steam., participant: heat
+True state change: [2], predicted: tensor([[0.2832, 0.0310, 0.5547, 0.1311]])
+Sentence: The heat is used to turn water into steam., participant: water
+True state change: [2], predicted: tensor([[0.0495, 0.7864, 0.1312, 0.0329]])
+Sentence: The heat is used to turn water into steam., participant: steam
+True state change: [1], predicted: tensor([[0.0361, 0.8835, 0.0437, 0.0368]])
+Sentence: The steam drives a turbine., participant: steam
+True state change: [0], predicted: tensor([[0.2013, 0.0784, 0.4494, 0.2709]])
+Sentence: The spinning generator creates electricity., participant: electricity
+True state change: [1], predicted: tensor([[0.0318, 0.9092, 0.0278, 0.0312]])
+Sentence: Sometimes trash is sorted into recycling., participant: trash
+True state change: [0], predicted: tensor([[0.4024, 0.1499, 0.2275, 0.2203]])
+Sentence: The city collects the trash., participant: trash
+True state change: [0], predicted: tensor([[0.5648, 0.0432, 0.0849, 0.3071]])
+Sentence: The trash is placed into a truck., participant: trash
+True state change: [3], predicted: tensor([[0.1225, 0.0270, 0.0740, 0.7765]])
+Sentence: The trash is placed into a truck., participant: truck
+True state change: [3], predicted: tensor([[0.1597, 0.7102, 0.0416, 0.0885]])
+Sentence: The truck drives to a landfill., participant: truck
+True state change: [3], predicted: tensor([[0.1653, 0.0312, 0.0745, 0.7290]])
+Sentence: The trash is unloaded., participant: trash
+True state change: [0], predicted: tensor([[0.3367, 0.0402, 0.0734, 0.5497]])
+Sentence: Sometimes the trash might be sorted more., participant: trash
+True state change: [0], predicted: tensor([[0.8548, 0.0364, 0.0471, 0.0617]])
+Sentence: The trash is put into the landfill., participant: trash
+True state change: [0], predicted: tensor([[0.1649, 0.0213, 0.0289, 0.7849]])
+Sentence: Trash is put into a household trashbag., participant: trash
+True state change: [3], predicted: tensor([[0.1123, 0.8349, 0.0231, 0.0296]])
+Sentence: The trashbags are thrown into a large outdoor trashcan., participant: trash
+True state change: [3], predicted: tensor([[0.4249, 0.0550, 0.1083, 0.4117]])
+Sentence: The trashbags are thrown into a large outdoor trashcan., participant: trashbags
+True state change: [3], predicted: tensor([[0.4398, 0.0645, 0.0896, 0.4061]])
+Sentence: The trashcan is emptied by a large trash truck., participant: trash
+True state change: [3], predicted: tensor([[0.3326, 0.0515, 0.0333, 0.5826]])
+Sentence: The trashcan is emptied by a large trash truck., participant: trash truck
+True state change: [0], predicted: tensor([[0.4414, 0.2427, 0.1014, 0.2145]])
+Sentence: The trash truck travels to the landfill., participant: trash
+True state change: [3], predicted: tensor([[0.1279, 0.0186, 0.0275, 0.8260]])
+Sentence: The trash truck travels to the landfill., participant: trash truck
+True state change: [3], predicted: tensor([[0.1062, 0.0215, 0.0324, 0.8399]])
+Sentence: Unloads all the trash the truck has collected., participant: trash
+True state change: [0], predicted: tensor([[0.4209, 0.0318, 0.0798, 0.4676]])
+Sentence: The trash is picked up by workers who put it on a garbage truck., participant: garbage
+True state change: [3], predicted: tensor([[0.4365, 0.0722, 0.0720, 0.4192]])
+Sentence: The trash is picked up by workers who put it on a garbage truck., participant: garbage truck
+True state change: [3], predicted: tensor([[0.4743, 0.1031, 0.0764, 0.3462]])
+Sentence: The trash is picked up by workers who put it on a garbage truck., participant: trash
+True state change: [3], predicted: tensor([[0.3807, 0.0525, 0.0749, 0.4919]])
+Sentence: The garbage truck is driven to a sorting center., participant: garbage
+True state change: [3], predicted: tensor([[0.3129, 0.0336, 0.1496, 0.5038]])
+Sentence: The garbage truck is driven to a sorting center., participant: garbage truck
+True state change: [3], predicted: tensor([[0.2754, 0.0379, 0.1658, 0.5209]])
+Sentence: The garbage is sorted., participant: garbage
+True state change: [0], predicted: tensor([[0.5505, 0.0549, 0.1843, 0.2104]])
+Sentence: Some of the garbage is saved for recycling., participant: garbage
+True state change: [0], predicted: tensor([[0.6880, 0.0349, 0.0674, 0.2098]])
+Sentence: Some of the garbage is saved for recycling., participant: recycling
+True state change: [1], predicted: tensor([[0.6505, 0.0654, 0.0925, 0.1916]])
+Sentence: The rest of the garbage is driven to the landfill., participant: garbage
+True state change: [3], predicted: tensor([[0.6043, 0.0348, 0.0376, 0.3233]])
+Sentence: The magma comes out from a volcano., participant: magma
+True state change: [1], predicted: tensor([[0.4413, 0.0590, 0.0668, 0.4328]])
+Sentence: The magma cools and becomes a rock., participant: magma
+True state change: [2], predicted: tensor([[0.5943, 0.0436, 0.2652, 0.0969]])
+Sentence: The magma cools and becomes a rock., participant: rock
+True state change: [1], predicted: tensor([[0.0895, 0.8501, 0.0378, 0.0226]])
+Sentence: Over time the rock picks up sediment which changes the type of rock., participant: rock
+True state change: [2], predicted: tensor([[0.8715, 0.0234, 0.0244, 0.0807]])
+Sentence: This creates a sedimentary rock., participant: rock
+True state change: [0], predicted: tensor([[0.2372, 0.6786, 0.0555, 0.0287]])
+Sentence: This creates a sedimentary rock., participant: sedimentary rock
+True state change: [0], predicted: tensor([[0.2391, 0.6594, 0.0716, 0.0299]])
+Sentence: The heat from inside and outside can cook a rock., participant: rock
+True state change: [0], predicted: tensor([[0.7455, 0.1280, 0.0430, 0.0835]])
+Sentence: This heat forms a third kind of rock., participant: rock
+True state change: [0], predicted: tensor([[0.4612, 0.2167, 0.2660, 0.0562]])
+Sentence: This heat forms a third kind of rock., participant: third kind of rock
+True state change: [1], predicted: tensor([[0.0465, 0.9306, 0.0162, 0.0068]])
+Sentence: The cycle continues around the three types of rocks., participant: rock
+True state change: [0], predicted: tensor([[0.8955, 0.0401, 0.0190, 0.0454]])
+Sentence: Rock begins as magma from a volcano., participant: magma
+True state change: [0], predicted: tensor([[0.1290, 0.8139, 0.0192, 0.0379]])
+Sentence: The magma cools., participant: magma
+True state change: [0], predicted: tensor([[0.6712, 0.0654, 0.1035, 0.1600]])
+Sentence: Crystals form and the magma become igneous rocks., participant: magma
+True state change: [2], predicted: tensor([[0.6083, 0.0933, 0.2539, 0.0446]])
+Sentence: Crystals form and the magma become igneous rocks., participant: igneous rocks
+True state change: [1], predicted: tensor([[0.2629, 0.6516, 0.0627, 0.0229]])
+Sentence: The igneous rocks break down into sediment become sedimentary rocks., participant: igneous rocks
+True state change: [2], predicted: tensor([[0.5528, 0.0414, 0.3341, 0.0717]])
+Sentence: The igneous rocks break down into sediment become sedimentary rocks., participant: sedimentary rocks
+True state change: [1], predicted: tensor([[0.1802, 0.6925, 0.1091, 0.0182]])
+Sentence: If subjected to heat and/or pressure from plate-tectonic activity the sedimentary rocks become metamorphic rock., participant: sedimentary rocks
+True state change: [2], predicted: tensor([[0.7847, 0.0277, 0.1470, 0.0406]])
+Sentence: If subjected to heat and/or pressure from plate-tectonic activity the sedimentary rocks become metamorphic rock., participant: metamorphic rock
+True state change: [1], predicted: tensor([[0.2383, 0.6736, 0.0624, 0.0256]])
+Sentence: The metaphoric rocks melt becoming magma again., participant: magma
+True state change: [1], predicted: tensor([[0.0513, 0.8845, 0.0414, 0.0229]])
+Sentence: The piston moves upwards., participant: piston
+True state change: [3], predicted: tensor([[0.3776, 0.0760, 0.2007, 0.3457]])
+Sentence: Chemical energy becomes thermal energy., participant: thermal energy
+True state change: [1], predicted: tensor([[0.0246, 0.9248, 0.0338, 0.0168]])
+Sentence: The explosion pushes the piston downward., participant: explosion
+True state change: [3], predicted: tensor([[0.3546, 0.0579, 0.2197, 0.3678]])
+Sentence: The explosion pushes the piston downward., participant: piston
+True state change: [3], predicted: tensor([[0.2715, 0.2200, 0.3154, 0.1930]])
+Sentence: The piston moves upwards again., participant: piston
+True state change: [3], predicted: tensor([[0.4039, 0.1004, 0.2388, 0.2569]])
+Sentence: The snow builds up for a very long time., participant: snow
+True state change: [0], predicted: tensor([[0.7391, 0.0565, 0.0823, 0.1221]])
+Sentence: The snow starts to become packed very firmly., participant: snow
+True state change: [0], predicted: tensor([[0.6194, 0.0481, 0.1015, 0.2309]])
+Sentence: The snow becomes something that's more like ice., participant: snow
+True state change: [2], predicted: tensor([[0.4532, 0.0466, 0.4460, 0.0543]])
+Sentence: Air pockets in the mass continue to grow smaller., participant: mass
+True state change: [1], predicted: tensor([[0.8638, 0.0162, 0.0425, 0.0776]])
+Sentence: The mass becomes solid and heavy enough to be called a glacier., participant: glacier
+True state change: [1], predicted: tensor([[0.5297, 0.2797, 0.1046, 0.0860]])
+Sentence: The mass becomes solid and heavy enough to be called a glacier., participant: mass
+True state change: [0], predicted: tensor([[0.5184, 0.0525, 0.3492, 0.0799]])
+Sentence: The glacier moves because of gravity., participant: glacier
+True state change: [0], predicted: tensor([[0.7872, 0.0527, 0.0514, 0.1087]])
+Sentence: Waste builds up in the blood., participant: blood
+True state change: [0], predicted: tensor([[0.7147, 0.0716, 0.0404, 0.1733]])
+Sentence: Different kinds of waste are momentarily trapped in the kidney., participant: waste
+True state change: [3], predicted: tensor([[0.4151, 0.1297, 0.0500, 0.4052]])
+Sentence: Cleaned blood flows out of the kidney., participant: blood
+True state change: [0], predicted: tensor([[0.1271, 0.0714, 0.0218, 0.7797]])
+Sentence: Filtered waste accumulates in liquid form (urine)., participant: waste
+True state change: [3], predicted: tensor([[0.1062, 0.1970, 0.6270, 0.0697]])
+Sentence: Filtered waste accumulates in liquid form (urine)., participant: urine
+True state change: [1], predicted: tensor([[0.0572, 0.8974, 0.0292, 0.0162]])
+Sentence: Kidneys filter that blood tiny filters inside the kidneys called nephrons., participant: blood
+True state change: [0], predicted: tensor([[0.1949, 0.0342, 0.0145, 0.7564]])
+Sentence: Remove the waste from the blood., participant: blood
+True state change: [2], predicted: tensor([[0.5059, 0.0553, 0.0703, 0.3684]])
+Sentence: Remove the waste from the blood., participant: waste
+True state change: [3], predicted: tensor([[0.1143, 0.0274, 0.0394, 0.8189]])
+Sentence: The waste that is collected combines with water to become urine., participant: waste
+True state change: [2], predicted: tensor([[0.6790, 0.0315, 0.1698, 0.1197]])
+Sentence: The waste that is collected combines with water to become urine., participant: urine
+True state change: [1], predicted: tensor([[0.0851, 0.8486, 0.0338, 0.0326]])
+Sentence: As each kidney makes urine, the urine slides down a long tube called the ureter., participant: urine
+True state change: [3], predicted: tensor([[0.2003, 0.3527, 0.0148, 0.4322]])
+Sentence: The filtered blood is sent back into the body., participant: blood
+True state change: [0], predicted: tensor([[0.0861, 0.0151, 0.0094, 0.8894]])
+Sentence: The filtered blood is sent back into the body., participant: filtered blood
+True state change: [3], predicted: tensor([[0.0879, 0.0157, 0.0103, 0.8860]])
+Sentence: They take out the toxins., participant: toxins
+True state change: [3], predicted: tensor([[0.6526, 0.0752, 0.0645, 0.2077]])
+Sentence: Produce urine., participant: urine
+True state change: [1], predicted: tensor([[0.1213, 0.7678, 0.0514, 0.0595]])
+Sentence: Fuel enters the engine through a carburetor or fuel injectors., participant: fuel
+True state change: [3], predicted: tensor([[0.1673, 0.0765, 0.0530, 0.7032]])
+Sentence: Air is let into the engine at the same time as the fuel., participant: fuel
+True state change: [0], predicted: tensor([[0.8290, 0.0343, 0.0215, 0.1151]])
+Sentence: The piston in the engine moves downwards compressing the air and fuel mixture., participant: fuel
+True state change: [0], predicted: tensor([[0.4984, 0.0599, 0.2826, 0.1591]])
+Sentence: The piston in the engine moves downwards compressing the air and fuel mixture., participant: air
+True state change: [0], predicted: tensor([[0.5813, 0.0393, 0.1156, 0.2638]])
+Sentence: The piston in the engine moves downwards compressing the air and fuel mixture., participant: piston
+True state change: [0], predicted: tensor([[0.5097, 0.0602, 0.0974, 0.3326]])
+Sentence: A spark plug causes a spark at the bottom stroke of the piston., participant: piston
+True state change: [0], predicted: tensor([[0.7332, 0.0326, 0.0662, 0.1680]])
+Sentence: A spark plug causes a spark at the bottom stroke of the piston., participant: spark
+True state change: [1], predicted: tensor([[0.0936, 0.8372, 0.0249, 0.0443]])
+Sentence: An explosion occurs in the engine forcing the piston back upwards., participant: piston
+True state change: [0], predicted: tensor([[0.3471, 0.0744, 0.0649, 0.5136]])
+Sentence: An explosion occurs in the engine forcing the piston back upwards., participant: explosion
+True state change: [1], predicted: tensor([[0.1947, 0.1977, 0.0722, 0.5354]])
+Sentence: As the piston goes up the valves for fuel and air open again., participant: fuel
+True state change: [0], predicted: tensor([[0.4123, 0.0688, 0.0611, 0.4578]])
+Sentence: As the piston goes up the valves for fuel and air open again., participant: air
+True state change: [0], predicted: tensor([[0.4071, 0.0512, 0.0634, 0.4782]])
+Sentence: As the piston goes up the valves for fuel and air open again., participant: piston
+True state change: [0], predicted: tensor([[0.4034, 0.0501, 0.0563, 0.4902]])
+Sentence: Fuel and air go in, and the process repeats., participant: air
+True state change: [0], predicted: tensor([[0.4827, 0.0701, 0.1180, 0.3293]])
+Sentence: The moving pistons are attached via connecting rods to a shaft., participant: piston
+True state change: [0], predicted: tensor([[0.2324, 0.0581, 0.0155, 0.6940]])
+Sentence: The shaft rotates out of the motor to turn the piston energy into rotational energy., participant: piston
+True state change: [0], predicted: tensor([[0.1380, 0.3208, 0.5024, 0.0388]])
+Sentence: The piston starts at the top, the intake valve opens, and the piston moves down to let the engine take in a cylinder-full of air and gasoline., participant: piston
+True state change: [0], predicted: tensor([[0.6698, 0.0576, 0.0805, 0.1920]])
+Sentence: The piston starts at the top, the intake valve opens, and the piston moves down to let the engine take in a cylinder-full of air and gasoline., participant: air
+True state change: [3], predicted: tensor([[0.7126, 0.0478, 0.0696, 0.1699]])
+Sentence: The piston starts at the top, the intake valve opens, and the piston moves down to let the engine take in a cylinder-full of air and gasoline., participant: gasoline
+True state change: [3], predicted: tensor([[0.7087, 0.1098, 0.0517, 0.1298]])
+Sentence: Then the piston moves back up to compress this fuel/air mixture., participant: piston
+True state change: [0], predicted: tensor([[0.5641, 0.0766, 0.1286, 0.2308]])
+Sentence: Then the piston moves back up to compress this fuel/air mixture., participant: air
+True state change: [0], predicted: tensor([[0.1584, 0.6490, 0.1398, 0.0528]])
+Sentence: Compression makes the explosion more powerful., participant: explosion
+True state change: [0], predicted: tensor([[0.6272, 0.0597, 0.2134, 0.0997]])
+Sentence: When the piston reaches the top of its stroke, the spark plug emits a spark to ignite the gasoline., participant: piston
+True state change: [0], predicted: tensor([[0.7302, 0.0316, 0.1043, 0.1339]])
+Sentence: When the piston reaches the top of its stroke, the spark plug emits a spark to ignite the gasoline., participant: gasoline
+True state change: [0], predicted: tensor([[0.7182, 0.0430, 0.1074, 0.1314]])
+Sentence: When the piston reaches the top of its stroke, the spark plug emits a spark to ignite the gasoline., participant: spark
+True state change: [1], predicted: tensor([[0.5543, 0.0478, 0.3347, 0.0632]])
+Sentence: The gasoline charge in the cylinder explodes, driving the piston down., participant: piston
+True state change: [0], predicted: tensor([[0.3569, 0.0708, 0.0741, 0.4982]])
+Sentence: The gasoline charge in the cylinder explodes, driving the piston down., participant: gasoline
+True state change: [2], predicted: tensor([[0.0730, 0.0528, 0.0361, 0.8382]])
+Sentence: Once the piston hits the bottom of its stroke, the exhaust valve opens and the exhaust leaves the cylinder to go out the tailpipe., participant: piston
+True state change: [0], predicted: tensor([[0.2585, 0.0317, 0.0204, 0.6893]])
+Sentence: Once the piston hits the bottom of its stroke, the exhaust valve opens and the exhaust leaves the cylinder to go out the tailpipe., participant: exhaust
+True state change: [3], predicted: tensor([[0.2217, 0.0267, 0.0216, 0.7300]])
+Sentence: The burning fuel creates energy., participant: fuel
+True state change: [0], predicted: tensor([[0.1214, 0.0579, 0.7639, 0.0568]])
+Sentence: The upward motion cause air to be released into the cylinder., participant: air
+True state change: [3], predicted: tensor([[0.1960, 0.3389, 0.0216, 0.4435]])
+Sentence: The piston compresses the air., participant: air
+True state change: [0], predicted: tensor([[0.3724, 0.0453, 0.1111, 0.4712]])
+Sentence: A spark ignites the fuel and air inside the cylinder., participant: fuel
+True state change: [0], predicted: tensor([[0.0631, 0.0230, 0.0141, 0.8998]])
+Sentence: A spark ignites the fuel and air inside the cylinder., participant: air
+True state change: [0], predicted: tensor([[0.1347, 0.0189, 0.0167, 0.8297]])
+Sentence: A spark ignites the fuel and air inside the cylinder., participant: spark
+True state change: [1], predicted: tensor([[0.0739, 0.4905, 0.0192, 0.4164]])
+Sentence: The pressure pushes the piston down., participant: pressure
+True state change: [0], predicted: tensor([[0.1805, 0.0371, 0.0425, 0.7399]])
+Sentence: The piston pushes the air out of the cylinder., participant: air
+True state change: [3], predicted: tensor([[0.1600, 0.0369, 0.0210, 0.7821]])
+Sentence: People put trash in a plastic bag., participant: trash
+True state change: [3], predicted: tensor([[0.1776, 0.0394, 0.0282, 0.7548]])
+Sentence: People put trash in a plastic bag., participant: plastic bag
+True state change: [0], predicted: tensor([[0.5015, 0.1790, 0.0350, 0.2846]])
+Sentence: The plastic bag is put into a garbage can., participant: plastic bag
+True state change: [3], predicted: tensor([[0.1334, 0.0245, 0.0333, 0.8088]])
+Sentence: The plastic bag is put into a garbage can., participant: garbage can
+True state change: [0], predicted: tensor([[0.5898, 0.2581, 0.0236, 0.1285]])
+Sentence: The garbage can is rolled outside., participant: garbage can
+True state change: [3], predicted: tensor([[0.6009, 0.0323, 0.0462, 0.3207]])
+Sentence: Workers take the plastic bag out of the garbage can and place it in the truck., participant: plastic bag
+True state change: [3], predicted: tensor([[0.5002, 0.0787, 0.0243, 0.3968]])
+Sentence: Workers take the plastic bag out of the garbage can and place it in the truck., participant: garbage can
+True state change: [0], predicted: tensor([[0.7402, 0.0270, 0.0247, 0.2081]])
+Sentence: The truck dumps the trash into the landfill., participant: trash
+True state change: [3], predicted: tensor([[0.1200, 0.0215, 0.0343, 0.8242]])
+Sentence: The trash is moved to a centralized container for the house., participant: trash
+True state change: [3], predicted: tensor([[0.1824, 0.0260, 0.0203, 0.7713]])
+Sentence: The trash is combined in a large truck with trash from all around the city., participant: trash
+True state change: [0], predicted: tensor([[0.6986, 0.0468, 0.0478, 0.2068]])
+Sentence: The trash is combined in a large truck with trash from all around the city., participant: truck
+True state change: [0], predicted: tensor([[0.4013, 0.4042, 0.0189, 0.1756]])
+Sentence: The truck goes to the landfill., participant: truck
+True state change: [3], predicted: tensor([[0.2050, 0.0240, 0.0372, 0.7338]])
+Sentence: The truck dumps the trash into the landfill., participant: trash
+True state change: [3], predicted: tensor([[0.1020, 0.0186, 0.0303, 0.8490]])
+Sentence: The truck dumps the trash into the landfill., participant: truck
+True state change: [0], predicted: tensor([[0.0948, 0.0159, 0.0248, 0.8646]])
+Sentence: Bags get carried out to the trashcan., participant: trash
+True state change: [0], predicted: tensor([[0.7833, 0.0366, 0.0374, 0.1428]])
+Sentence: Bags get carried out to the trashcan., participant: trashcan
+True state change: [0], predicted: tensor([[0.7606, 0.0474, 0.0428, 0.1492]])
+Sentence: Can gets emptied into trash truck., participant: trash
+True state change: [0], predicted: tensor([[0.2783, 0.1018, 0.0703, 0.5496]])
+Sentence: As the truck fills it will compact the trash., participant: trash
+True state change: [0], predicted: tensor([[0.5843, 0.0484, 0.0665, 0.3008]])
+Sentence: The electricity runs the components in the computer., participant: electricity
+True state change: [3], predicted: tensor([[0.4557, 0.1009, 0.0642, 0.3793]])
+Sentence: Light is formed from the electricity., participant: electricity
+True state change: [0], predicted: tensor([[0.5491, 0.1463, 0.1122, 0.1924]])
+Sentence: The signals they complete are sent out as visual signals., participant: visual signals
+True state change: [1], predicted: tensor([[0.3082, 0.6482, 0.0103, 0.0333]])
+Sentence: The energy is used to complete computations., participant: computations
+True state change: [1], predicted: tensor([[0.1369, 0.8205, 0.0222, 0.0203]])
+Sentence: Add dirty laundry to the washing machine., participant: dirty laundry
+True state change: [3], predicted: tensor([[0.1380, 0.0963, 0.0331, 0.7325]])
+Sentence: Add laundry detergent to the washing machine., participant: laundry detergent
+True state change: [3], predicted: tensor([[0.1441, 0.0806, 0.0413, 0.7341]])
+Sentence: The dead plant starts to draw microbes., participant: microbes
+True state change: [3], predicted: tensor([[0.6008, 0.1910, 0.1007, 0.1076]])
+Sentence: The microbes break down the material., participant: microbes
+True state change: [0], predicted: tensor([[0.6317, 0.0576, 0.0838, 0.2269]])
+Sentence: Bacteria release enzymes onto the plant material., participant: enzymes
+True state change: [3], predicted: tensor([[0.2604, 0.3422, 0.0540, 0.3434]])
+Sentence: The enzymes break down the plant cells to simpler components., participant: enzymes
+True state change: [0], predicted: tensor([[0.5504, 0.0796, 0.2018, 0.1682]])
+Sentence: The enzymes break down the plant cells to simpler components., participant: plant cells
+True state change: [2], predicted: tensor([[0.6546, 0.0519, 0.2010, 0.0926]])
+Sentence: The enzymes break down the plant cells to simpler components., participant: components
+True state change: [1], predicted: tensor([[0.1758, 0.7619, 0.0365, 0.0258]])
+Sentence: The bacteria absorb the resulting components., participant: bacteria
+True state change: [0], predicted: tensor([[0.6210, 0.0747, 0.1710, 0.1333]])
+Sentence: The bacteria absorb the resulting components., participant: components
+True state change: [2], predicted: tensor([[0.4913, 0.1854, 0.2148, 0.1084]])
+Sentence: Dissolution of limestone forms caves., participant: limestone
+True state change: [0], predicted: tensor([[0.4668, 0.2914, 0.1972, 0.0446]])
+Sentence: Dissolution of limestone forms caves., participant: caves
+True state change: [0], predicted: tensor([[0.1242, 0.8299, 0.0317, 0.0143]])
+Sentence: Rain gets carbon dioxide from the air., participant: carbon dioxide
+True state change: [2], predicted: tensor([[0.0680, 0.1359, 0.0641, 0.7320]])
+Sentence: When rain goes into soil it creates an acid., participant: rain
+True state change: [2], predicted: tensor([[0.1550, 0.0702, 0.7048, 0.0700]])
+Sentence: When rain goes into soil it creates an acid., participant: acid
+True state change: [1], predicted: tensor([[0.0453, 0.8908, 0.0419, 0.0220]])
+Sentence: The acid dissolves the limestone along cracks., participant: acid
+True state change: [0], predicted: tensor([[0.5992, 0.0862, 0.1049, 0.2097]])
+Sentence: The acid dissolves the limestone along cracks., participant: limestone
+True state change: [2], predicted: tensor([[0.6419, 0.0735, 0.1067, 0.1779]])
+Sentence: Some will dissolve enough to form caves., participant: caves
+True state change: [1], predicted: tensor([[0.1443, 0.8036, 0.0334, 0.0188]])
+Sentence: Rainwater picks up carbon dioxide from the air., participant: carbon dioxide
+True state change: [3], predicted: tensor([[0.0555, 0.0655, 0.0544, 0.8246]])
+Sentence: Rainwater picks up carbon dioxide from the air., participant: water
+True state change: [0], predicted: tensor([[0.0752, 0.0439, 0.0704, 0.8104]])
+Sentence: Rainwater goes into soil., participant: water
+True state change: [3], predicted: tensor([[0.1491, 0.1596, 0.1979, 0.4934]])
+Sentence: Water with carbon dioxide percolates through soil., participant: carbon dioxide
+True state change: [0], predicted: tensor([[0.0859, 0.2613, 0.2210, 0.4319]])
+Sentence: The water becomes a weak acid., participant: water
+True state change: [2], predicted: tensor([[0.1121, 0.0363, 0.8194, 0.0322]])
+Sentence: The water becomes a weak acid., participant: weak acid
+True state change: [1], predicted: tensor([[0.0136, 0.9714, 0.0107, 0.0043]])
+Sentence: The water dissolves limestone., participant: water
+True state change: [0], predicted: tensor([[0.4428, 0.0756, 0.3546, 0.1270]])
+Sentence: The water dissolves limestone., participant: limestone
+True state change: [2], predicted: tensor([[0.3206, 0.3919, 0.2023, 0.0852]])
+Sentence: Caves form where the limestone was dissolved., participant: limestone
+True state change: [0], predicted: tensor([[0.8071, 0.0586, 0.0865, 0.0478]])
+Sentence: The water starts going into the bedrock below., participant: bedrock
+True state change: [3], predicted: tensor([[0.8587, 0.0419, 0.0250, 0.0745]])
+Sentence: The bedrock erodes after much time passes., participant: bedrock
+True state change: [0], predicted: tensor([[0.7070, 0.0488, 0.1205, 0.1237]])
+Sentence: The bedrock forms funnels., participant: bedrock
+True state change: [2], predicted: tensor([[0.4476, 0.0968, 0.3476, 0.1080]])
+Sentence: The bedrock forms funnels., participant: funnels
+True state change: [1], predicted: tensor([[0.1041, 0.8039, 0.0561, 0.0359]])
+Sentence: The funnels grow larger and wider., participant: funnels
+True state change: [0], predicted: tensor([[0.5923, 0.0501, 0.2717, 0.0859]])
+Sentence: The funnels finally become caves., participant: funnels
+True state change: [2], predicted: tensor([[0.4953, 0.0470, 0.2832, 0.1745]])
+Sentence: The funnels finally become caves., participant: caves
+True state change: [1], predicted: tensor([[0.1348, 0.7710, 0.0601, 0.0341]])
+Sentence: Enzymes in the stomach break down the food., participant: food
+True state change: [2], predicted: tensor([[0.6206, 0.0649, 0.0595, 0.2550]])
+Sentence: The food moves to the small intestine., participant: food
+True state change: [0], predicted: tensor([[0.2554, 0.0264, 0.0294, 0.6888]])
+Sentence: The hormones create the amount of sugar in the blood from the food., participant: food
+True state change: [0], predicted: tensor([[0.7118, 0.0482, 0.0545, 0.1856]])
+Sentence: The hormones create the amount of sugar in the blood from the food., participant: sugar
+True state change: [1], predicted: tensor([[0.5623, 0.2678, 0.0296, 0.1403]])
+Sentence: The sugar in the blood travels to the body., participant: sugar
+True state change: [3], predicted: tensor([[0.2537, 0.0665, 0.0273, 0.6525]])
+Sentence: The sugar provides energy for the muscles., participant: sugar
+True state change: [2], predicted: tensor([[0.3597, 0.2299, 0.2910, 0.1194]])
+Sentence: The sugar provides energy for the muscles., participant: energy
+True state change: [1], predicted: tensor([[0.0786, 0.8109, 0.0486, 0.0620]])
+Sentence: Food is entered into the gut., participant: Food
+True state change: [3], predicted: tensor([[0.1088, 0.0433, 0.0268, 0.8211]])
+Sentence: Food or milk that could spoil easily is brought in., participant: milk
+True state change: [0], predicted: tensor([[0.5321, 0.1326, 0.2506, 0.0847]])
+Sentence: Through methods of heating the food is treated., participant: food
+True state change: [0], predicted: tensor([[0.6653, 0.0797, 0.0717, 0.1833]])
+Sentence: The microbes that may proliferate in the food are destroyed., participant: food
+True state change: [0], predicted: tensor([[0.7972, 0.0436, 0.0391, 0.1201]])
+Sentence: The microbes that may proliferate in the food are destroyed., participant: microbes
+True state change: [2], predicted: tensor([[0.7164, 0.0637, 0.0621, 0.1578]])
+Sentence: The food is considered pasteurized., participant: food
+True state change: [0], predicted: tensor([[0.7087, 0.0397, 0.0680, 0.1836]])
+Sentence: Erosion breaks them down to sediment., participant: sediment
+True state change: [1], predicted: tensor([[0.5579, 0.1118, 0.1436, 0.1867]])
+Sentence: When sediment is buried it then gets melted., participant: sediment
+True state change: [0], predicted: tensor([[0.6176, 0.0603, 0.2401, 0.0820]])
+Sentence: When sediment is compressed it becomes metamorphic rock., participant: rock
+True state change: [0], predicted: tensor([[0.1627, 0.7402, 0.0630, 0.0341]])
+Sentence: When sediment is compressed it becomes metamorphic rock., participant: sediment
+True state change: [2], predicted: tensor([[0.5874, 0.0524, 0.2501, 0.1101]])
+Sentence: When sediment is compressed it becomes metamorphic rock., participant: metamorphic rock
+True state change: [1], predicted: tensor([[0.1335, 0.7802, 0.0650, 0.0214]])
+Sentence: Metamorphic rock gets buried., participant: rock
+True state change: [0], predicted: tensor([[0.4578, 0.2028, 0.2057, 0.1337]])
+Sentence: Buried metamorphic rock gets melted., participant: rock
+True state change: [0], predicted: tensor([[0.4693, 0.1393, 0.3173, 0.0741]])
+Sentence: Buried metamorphic rock gets melted., participant: metamorphic rock
+True state change: [2], predicted: tensor([[0.4620, 0.1709, 0.3007, 0.0664]])
+Sentence: Melted rock eventually cools., participant: rock
+True state change: [0], predicted: tensor([[0.2045, 0.2614, 0.4750, 0.0591]])
+Sentence: Blood filled with waste flows into the kidneys., participant: waste
+True state change: [3], predicted: tensor([[0.0882, 0.0326, 0.0194, 0.8598]])
+Sentence: Blood filled with waste flows into the kidneys., participant: kidney
+True state change: [3], predicted: tensor([[0.5420, 0.1385, 0.0722, 0.2474]])
+Sentence: The kidneys are made up of filtering units called nephrons., participant: kidney
+True state change: [0], predicted: tensor([[0.6811, 0.0792, 0.0349, 0.2048]])
+Sentence: The nephrons in the kidneys filter the blood., participant: blood
+True state change: [0], predicted: tensor([[0.5713, 0.0531, 0.0352, 0.3404]])
+Sentence: The nephrons in the kidneys filter the blood., participant: kidney
+True state change: [0], predicted: tensor([[0.3445, 0.0438, 0.0279, 0.5838]])
+Sentence: Produce urine., participant: urine
+True state change: [1], predicted: tensor([[0.1260, 0.7389, 0.0625, 0.0726]])
+Sentence: The urine leaves the kidneys., participant: kidney
+True state change: [0], predicted: tensor([[0.4296, 0.0702, 0.0774, 0.4228]])
+Sentence: The urine leaves the kidneys., participant: urine
+True state change: [3], predicted: tensor([[0.1933, 0.0277, 0.0350, 0.7440]])
+Sentence: The cleaned blood goes back into the body., participant: blood
+True state change: [3], predicted: tensor([[0.0795, 0.0169, 0.0111, 0.8925]])
+Sentence: The cleaned blood goes back into the body., participant: cleaned blood
+True state change: [3], predicted: tensor([[0.0615, 0.0163, 0.0119, 0.9103]])
+Sentence: An alternator will convert mechanical energy in to measurable electrical energy., participant: mechanical energy
+True state change: [2], predicted: tensor([[0.0795, 0.7604, 0.1347, 0.0255]])
+Sentence: The heat energy turns water into steam in a nuclear reactor., participant: heat energy
+True state change: [3], predicted: tensor([[0.1329, 0.0296, 0.7715, 0.0659]])
+Sentence: The heat energy turns water into steam in a nuclear reactor., participant: water
+True state change: [2], predicted: tensor([[0.1223, 0.3797, 0.2934, 0.2047]])
+Sentence: The heat energy turns water into steam in a nuclear reactor., participant: steam
+True state change: [1], predicted: tensor([[0.0984, 0.6216, 0.1248, 0.1553]])
+Sentence: The steam turns big turbines., participant: steam
+True state change: [3], predicted: tensor([[0.2628, 0.0652, 0.5596, 0.1124]])
+Sentence: The generators make electricity., participant: electricity
+True state change: [1], predicted: tensor([[0.0776, 0.7905, 0.0559, 0.0760]])
+Sentence: The steam turns back into water., participant: water
+True state change: [1], predicted: tensor([[0.1482, 0.4860, 0.1367, 0.2290]])
+Sentence: The steam turns back into water., participant: steam
+True state change: [2], predicted: tensor([[0.1041, 0.1129, 0.1477, 0.6352]])
+Sentence: A nuclear reactor generates heat by nuclear fission., participant: heat
+True state change: [3], predicted: tensor([[0.2490, 0.5773, 0.1179, 0.0557]])
+Sentence: The heat created raises steam., participant: heat
+True state change: [0], predicted: tensor([[0.2656, 0.0474, 0.6324, 0.0545]])
+Sentence: The heat created raises steam., participant: steam
+True state change: [1], predicted: tensor([[0.0516, 0.8321, 0.0700, 0.0464]])
+Sentence: The steam runs through turbines., participant: steam
+True state change: [3], predicted: tensor([[0.1422, 0.1715, 0.1826, 0.5037]])
+Sentence: The turbines generate electricity., participant: electricity
+True state change: [1], predicted: tensor([[0.0853, 0.7816, 0.0603, 0.0728]])
+Sentence: The electricity leaves the station., participant: electricity
+True state change: [0], predicted: tensor([[0.2812, 0.0649, 0.0621, 0.5919]])
+Sentence: The spider produces sticky silk from its abdomen., participant: silk
+True state change: [1], predicted: tensor([[0.1549, 0.7045, 0.0144, 0.1262]])
+Sentence: The spider attaches it to objects where it wants to build the web., participant: web
+True state change: [0], predicted: tensor([[0.8940, 0.0403, 0.0100, 0.0556]])
+Sentence: The spider strings this silk back and forth between objects., participant: silk
+True state change: [0], predicted: tensor([[0.7281, 0.1356, 0.0350, 0.1013]])
+Sentence: A web is created., participant: web
+True state change: [1], predicted: tensor([[0.5653, 0.3465, 0.0308, 0.0574]])
