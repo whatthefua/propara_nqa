@@ -1,4 +1,10 @@
 models/*
 outputs/*
+new_outputs/*
+test_outputs/*
 data/6B*
 data/glove*
+res*
+run*
+new_res_eval_ssl_256_all.txt
+test_preds.txt

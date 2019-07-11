@@ -67,11 +67,14 @@ def augment_random_without_entity(sample):
 
 def augment_synonym(sample):
 	for i in range(len(sample["lemma_text"])):
-		if sample["entity_tags"][i] == 0. and random.random < 0.15:
+		if sample["entity_tags"][i] == 0. and random.random() < 0.15:
 			synonyms = wordnet.synsets(sample["lemma_text"][i])
 			synonym_words = []
 
-			for lemma in synonyms.lemmas():
+			if synonyms == []:
+				continue
+
+			for lemma in synonyms:
 				synonym_words.append(lemma.name())
 
 			synonym_words = list(set(synonym_words))
@@ -87,6 +90,8 @@ def augment_synonym(sample):
 			if new_word != "":
 				sample["lemma_text"][i] = new_word
 				sample["gloves"][i, :] = get_glove_embedding(new_word)
+
+	return sample
 
 def mixmatch_sharpen(preds, temp):
 	preds_exp = np.power(preds, 1. / temp)
@@ -242,7 +247,7 @@ optimizer = torch.optim.Adadelta(proLocal.parameters(), lr = 0.2, rho = 0.95)
 max_iterations = 500
 iteration_size = 32
 
-max_epoch = 5
+max_epoch = 0
 
 # Train the model (supervised)
 for epoch in range(max_epoch):
@@ -317,7 +322,7 @@ for iteration in range(1, max_iterations + 1):
 	train_samples_batch = random.sample(train_samples, iteration_size)
 	unlabeled_samples_batch = random.sample(unlabeled_samples, iteration_size)
 
-	mixmatch_batch = create_mixmatch(proLocal, train_samples_batch, unlabeled_samples_batch, augment_random_without_entity)
+	mixmatch_batch = create_mixmatch(proLocal, train_samples_batch, unlabeled_samples_batch, augment_synonym)
 
 	sum_loss = 0.
 

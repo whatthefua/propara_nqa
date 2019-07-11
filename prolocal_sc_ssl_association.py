@@ -1,4 +1,5 @@
 import csv
+import json
 import math
 import numpy as np
 import pickle
@@ -47,22 +48,22 @@ def cal_f1(cm):
 # prediction model
 
 class ProLocal(nn.Module):
-	def __init__(self, state_label_weights):
+	def __init__(self, emb_size = 20):
 		super(ProLocal, self).__init__()
 
-		self.state_label_weights = torch.from_numpy(state_label_weights).float()
+		self.emb_size = emb_size
 
 		self.lstm = nn.LSTM(input_size = 102, hidden_size = 50, bidirectional = True, num_layers = 2, dropout = 0.2)		# plus verb + entity tags
 
 		self.bilinear_agg = nn.Bilinear(100, 200, 1)		# hi * B * hev + b
 
-		self.agg_feedforward = nn.Sequential(
-			nn.Linear(100, 4)
-			# nn.ReLU(),
-			# nn.Linear(50, 4)
+		self.agg_feedforward_emb = nn.Sequential(
+			nn.Dropout(p = 0.3),
+			nn.Linear(100, emb_size),
+			nn.ReLU()
 		)
 
-		self.logsoftmax = nn.LogSoftmax()
+		self.agg_classify = nn.Linear(emb_size, 4)
 
 		self.print_debug = False
 
@@ -100,7 +101,8 @@ class ProLocal(nn.Module):
 		self.hidden_agg = (hidden * agg_attention_weights).sum(dim = 0).view(-1, 100)
 
 		# classification, aggregate
-		self.state_change_label_logits = self.agg_feedforward(self.hidden_agg).view(-1, 4)
+		self.emb = self.agg_feedforward_emb(self.hidden_agg).view(-1, self.emb_size)
+		self.state_change_label_logits = self.agg_classify(self.emb).view(-1, 4)
     
 		if self.print_debug:
 		    print("sc logits", self.state_change_label_logits)
@@ -109,31 +111,83 @@ class ProLocal(nn.Module):
 
 		return self.state_change_label_prob
 
-	def ce_loss(self, state_change_label, coefficient):
+	def ce_loss(self, state_change_label):
 		state_change_label = torch.from_numpy(state_change_label).view(-1).long()
 
-		loss_state_change_label = nn.CrossEntropyLoss(self.state_label_weights)(self.state_change_label_logits, state_change_label)
+		loss_state_change_label = nn.CrossEntropyLoss()(self.state_change_label_logits, state_change_label)
 
-		return loss_state_change_label * coefficient
+		return loss_state_change_label
 
-	def visit_loss(self):
+	def visit_loss(self, labeled_embs, unlabeled_embs):
+		labeled_embs_torch = torch.from_numpy(labeled_embs).view(-1, self.emb_size)
+		unlabeled_embs_torch = torch.from_numpy(unlabeled_embs).view(-1, self.emb_size)
+
+		sim_ab = torch.mm(labeled_embs_torch, torch.t(unlabeled_embs_torch))
+		p_ab = torch.nn.functional.softmax(sim_ab)
+		p_ab_nonzero = torch.add(p_ab, 1e-8)
+
+		p_ab_log = torch.nn.functional.log_softmax(p_ab_nonzero)
+
+		p_target = torch.tensor((), dtype = torch.float32)
+		p_target = p_target.new_full(p_ab_nonzero.size(), 1. / float(unlabeled_embs.shape[0]))
+
+		visit_loss = torch.mean(torch.sum(-p_target * p_ab_log, dim = 1))
+
+		return visit_loss
 
 	def walker_loss(self, labeled_embs, labels, unlabeled_embs):
 		labels_torch = torch.from_numpy(labels)
-		eq_matrix = labels_torch.expand(labels.size, labels.size).eq(torch.transpose(labels_torch, 0, 1).expand(labels.size, labels.size))
-		p_target = eq_matrix / torch.sum(eq_matrix, dim = 1, keep_dim = True)
+		eq_matrix = labels_torch.expand(labels.size, labels.size).eq(labels_torch.t().expand(labels.size, labels.size)).float()
+		p_target = eq_matrix / torch.sum(eq_matrix, dim = 1).float()
 
-		labeled_embs_torch = torch.from_numpy(labeled_embs)
-		unlabeled_embs_torch = torch.from_numpy(unlabeled_embs)
+		labeled_embs_torch = torch.from_numpy(labeled_embs).view(-1 ,self.emb_size)
+		unlabeled_embs_torch = torch.from_numpy(unlabeled_embs).view(-1, self.emb_size)
 
+		sim_ab = torch.mm(labeled_embs_torch, unlabeled_embs_torch.t())
+		p_ab = torch.nn.functional.softmax(sim_ab)
+		p_ba = torch.nn.functional.softmax(sim_ab.t())
+		p_aba = torch.mm(p_ab, p_ba)
+		p_aba_nonzero = torch.add(p_aba, 1e-8)
 
-		sim_ab = torch.mul(labeled_embs_torch, torch.tra)
+		p_aba_log = torch.nn.functional.log_softmax(p_aba_nonzero).float()
+		walker_loss = torch.mean(torch.sum(-torch.mul(p_target, p_aba_log), dim = 1))
+
+		return walker_loss
+
+	def loss(self, labeled_samples, unlabeled_samples, visit_weight = 1., walker_weight = 1.):
+		losses = []
+
+		labeled_embs = []
+		unlabeled_embs = []
+		labels = []
+
+		# calculate ce loss
+		for labeled_sample in labeled_samples:
+			self(labeled_sample)
+			labeled_embs.append(self.emb.detach().numpy())
+			labels.append(get_state_label_id(labeled_sample["state_label"])[0])
+
+			losses.append(proLocal.ce_loss(get_state_label_id(labeled_sample["state_label"])))
+
+		for unlabeled_sample in unlabeled_samples:
+			self(unlabeled_sample)
+			unlabeled_embs.append(self.emb.detach().numpy())
+
+		labeled_embs = np.array(labeled_embs)
+		unlabeled_embs = np.array(unlabeled_embs)
+		labels = np.array(labels)
+
+		# calculate visit loss
+		losses.append(torch.mul(self.visit_loss(labeled_embs, unlabeled_embs), visit_weight))
+
+		# calculate walker loss
+		losses.append(torch.mul(self.walker_loss(labeled_embs, labels, unlabeled_embs), walker_weight))
+
+		return sum(losses)
+		
 
 with open("data/train_samples.pkl", "rb") as fp:
 	train_samples = pickle.load(fp)
-
-with open("data/test_samples.pkl", "rb") as fp:
-	test_samples = pickle.load(fp)
 
 with open("data/dev_samples.pkl", "rb") as fp:
 	dev_samples = pickle.load(fp)
@@ -141,111 +195,75 @@ with open("data/dev_samples.pkl", "rb") as fp:
 with open("data/unlabeled_samples.pkl", "rb") as fp:
 	unlabeled_samples = pickle.load(fp)
 
+with open("configs/prolocal_sc_ssl_association.json", "r") as fp:
+	configs = json.load(fp)
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Using device: %s" % device)
 
+max_iterations = configs["max_iterations"]
+iteration_size = configs["iteration_size"]
+output_path = configs["output_path"]
+model_path = configs["model_path"]
+patience = int(configs["patience"])
+threshold = float(configs["threshold"])
+seed = int(configs["seed"])
+
+torch.manual_seed(seed)
+random.seed(seed)
+
 # state_label_weights = np.array([2.4632272228320526, 4.408644400785855, 7.764705882352941, 4.194392523364486])
 # state_label_weights = np.array([math.sqrt(2.4632272228320526), math.sqrt(4.408644400785855), math.sqrt(7.764705882352941), math.sqrt(4.194392523364486)])
-state_label_weights = np.ones((4,))
+# state_label_weights = np.ones((4,))
 
-proLocal = ProLocal(state_label_weights)
+proLocal = ProLocal(emb_size = configs["emb_size"])
 # proLocal.apply(weights_init)
 
 optimizer = torch.optim.Adadelta(proLocal.parameters(), lr = 0.2, rho = 0.95)
 
-max_iterations = 100
-iteration_size = 32
+visit_weight = float(configs["visit_weight"])
+walker_weight = float(configs["walker_weight"])
 
-max_epoch = 5
+if configs["num_labeled_samples"] != "all":
+	train_samples = random.sample(train_samples, int(configs["num_labeled_samples"]))
 
-# Train the model (supervised)
-for epoch in range(max_epoch):
-	random.shuffle(train_samples)
+if configs["num_unlabeled_samples"] != "all":
+	unlabeled_samples = random.sample(unlabeled_samples, int(configs["num_unlabeled_samples"]))
 
-	for i, train_sample in enumerate(train_samples):
-		pred_state_change = proLocal(train_sample)
+output_json = {
+	"training_outputs": []
+}
 
-		state_label_id = get_state_label_id(train_sample["state_label"])
+# max_acc = 0.
+# max_acc_f1 = 0.
+# max_acc_iteration = 0
 
-		loss = proLocal.ce_loss(state_label_id, 1.)
-
-		optimizer.zero_grad()
-		loss.backward()
-		optimizer.step()
-
-		if (i + 1) % 500 == 0:
-			print("Epoch [{}/{}], Step [{}/{}], Loss: {:.3f}".format(epoch + 1, max_epoch, i + 1, len(train_samples), loss.item()))
-
-	# proLocal.print_debug = True
-
-	with torch.no_grad():
-		correct_state_label = 0
-		total_state_label = 0
-
-		sum_loss = 0.0
-
-		state_label_cm = [[0] * 4 for _ in range(4)]
-
-		fpDev = open("dev_preds_epoch%d.txt" % (epoch + 1), "w")
-
-		for i, dev_sample in enumerate(dev_samples):
-			pred_state_change = proLocal(dev_sample)
-
-			# sys.exit()
-
-			state_label_id = get_state_label_id(dev_sample["state_label"])
-
-			loss = proLocal.ce_loss(state_label_id, 1.)
-
-			_, pred_state_label = torch.max(pred_state_change.data, 1)
-			
-			if pred_state_label[0] == get_state_label_id(dev_sample["state_label"])[0]:
-				correct_state_label += 1
-
-			state_label_cm[int(pred_state_label[0])][get_state_label_id(dev_sample["state_label"])[0]] += 1
-
-			total_state_label += 1
-
-			sum_loss += loss
-
-			fpDev.write("Sentence: %s, participant: %s\n" % (dev_sample["text"], dev_sample["participant"]))
-			fpDev.write("True state change: %s, predicted: %s\n" % (state_label_id, pred_state_change))
-
-		fpDev.close()
-
-		print("Validation accuracy is: {:.3f}%, Avg loss = {:.3f}, F1 = {:.3f}"
-			.format(100 * correct_state_label / total_state_label, sum_loss / float(total_state_label), cal_f1(state_label_cm)))
-		print("State label confusion matrix: ", state_label_cm)
-		print("\n\n=========================================================\n\n")
+max_f1 = 0.
+max_f1_acc = 0.
+max_f1_iteration = 0
 
 # Train the model (semi-supervised)
 for iteration in range(1, max_iterations + 1):
+	if max_f1_iteration + patience < iteration and max_f1 > threshold:
+		break
+
 	train_samples_batch = random.sample(train_samples, iteration_size)
 	unlabeled_samples_batch = random.sample(unlabeled_samples, iteration_size)
+	# sum_loss = 0.
 
-	mixmatch_batch = create_mixmatch(proLocal, train_samples_batch, unlabeled_samples_batch, augment_random_without_entity)
+	loss = proLocal.loss(train_samples_batch, unlabeled_samples_batch, visit_weight, walker_weight)
 
-	sum_loss = 0.
+	optimizer.zero_grad()
+	loss.backward()
+	optimizer.step()
 
-	for mixmatch_sample in mixmatch_batch:
-		pred_state_change = proLocal(mixmatch_sample)
+	# 	sum_loss += loss.item()
 
-		if mixmatch_sample["loss"] == "ce":
-			loss = proLocal.ce_loss(mixmatch_sample["target"], mixmatch_sample["coefficient"])
-		elif mixmatch_sample["loss"] == "mse":
-			loss = proLocal.mse_loss(mixmatch_sample["target"], mixmatch_sample["coefficient"])
-
-		optimizer.zero_grad()
-		loss.backward()
-		optimizer.step()
-
-		sum_loss += loss.item()
-
-	print("Iteration [{}/{}], Avg Loss: {:.3f}".format(iteration, max_iterations, sum_loss / float(len(mixmatch_batch))))
+	print("Iteration [{}/{}], Avg Loss: {:.3f}".format(iteration, max_iterations, loss.item() / float(iteration_size * 2)))
 
 	# proLocal.print_debug = True
 
-	if iteration % 5 == 0:
+	if iteration % 20 == 0:
 		with torch.no_grad():
 			correct_state_label = 0
 			total_state_label = 0
@@ -261,7 +279,7 @@ for iteration in range(1, max_iterations + 1):
 
 				state_label_id = get_state_label_id(dev_sample["state_label"])
 
-				loss = proLocal.ce_loss(state_label_id, 1.)
+				loss = proLocal.ce_loss(state_label_id)
 
 				_, pred_state_label = torch.max(pred_state_change.data, 1)
 				
@@ -279,7 +297,44 @@ for iteration in range(1, max_iterations + 1):
 
 			# fpDev.close()
 
+			acc = 100. * float(correct_state_label) / float(total_state_label)
+			f1 = cal_f1(state_label_cm)
+
 			print("Validation accuracy is: {:.3f}%, Avg loss = {:.3f}, F1 = {:.3f}"
-				.format(100 * correct_state_label / total_state_label, sum_loss / float(total_state_label), cal_f1(state_label_cm)))
+				.format(acc, sum_loss / float(total_state_label), f1))
 			print("State label confusion matrix: ", state_label_cm)
 			print("\n\n=========================================================\n\n")
+
+			output_json["training_outputs"].append({
+					"iteration": iteration,
+					"accuracy": acc,
+					"f1": f1,
+					"cm": state_label_cm
+				})
+
+			# if acc > max_acc:
+			# 	max_acc = acc
+			# 	max_acc_iteration = iteration
+			# 	max_acc_f1 = f1
+
+			if f1 > max_f1:
+				max_f1 = f1
+				max_f1_iteration = iteration
+				max_f1_acc = acc
+
+		torch.save(proLocal.state_dict(), model_path + "iteration%05d.pt" % (iteration))
+
+# output_json["max_acc"] = {
+# 	"acc": max_acc,
+# 	"iteration": max_acc_iteration,
+# 	"f1": max_acc_f1
+# }
+
+output_json["max_f1"] = {
+	"f1": max_f1,
+	"iteration": max_f1_iteration,
+	"acc": max_f1_acc
+}
+
+with open(output_path, "w") as fp:
+	json.dump(output_json, fp, indent = 4)

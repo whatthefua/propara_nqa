@@ -46,10 +46,8 @@ def cal_f1(cm):
 # prediction model
 
 class ProLocal(nn.Module):
-	def __init__(self, state_label_weights):
+	def __init__(self):
 		super(ProLocal, self).__init__()
-
-		self.state_label_weights = torch.from_numpy(state_label_weights).float()
 
 		self.lstm = nn.LSTM(input_size = 102, hidden_size = 50, bidirectional = True, num_layers = 2, dropout = 0.2)		# plus verb + entity tags
 
@@ -113,20 +111,14 @@ class ProLocal(nn.Module):
 	def loss(self, state_change_label):
 		state_change_label = torch.from_numpy(state_change_label).view(-1).long()
 
-		loss_state_change_label = nn.CrossEntropyLoss(self.state_label_weights)(self.state_change_label_logits, state_change_label)
+		loss_state_change_label = nn.CrossEntropyLoss()(self.state_change_label_logits, state_change_label)
 
 		return loss_state_change_label
-
-with open("data/train_samples.pkl", "rb") as fp:
-	train_samples = pickle.load(fp)
 
 with open("data/test_samples.pkl", "rb") as fp:
 	test_samples = pickle.load(fp)
 
-with open("data/dev_samples.pkl", "rb") as fp:
-	dev_samples = pickle.load(fp)
-
-with open("configs/prolocal_sc.json", "r") as fp:
+with open("configs/eval_prolocal_sc.json", "r") as fp:
 	configs = json.load(fp)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -134,132 +126,62 @@ print("Using device: %s" % device)
 
 # state_label_weights = np.array([2.4632272228320526, 4.408644400785855, 7.764705882352941, 4.194392523364486])
 # state_label_weights = np.array([math.sqrt(2.4632272228320526), math.sqrt(4.408644400785855), math.sqrt(7.764705882352941), math.sqrt(4.194392523364486)])
-state_label_weights = np.ones((4,))
+
+proLocal = ProLocal()
+# proLocal.apply(weights_init)
 
 output_path = configs["output_path"]
 model_path = configs["model_path"]
-patience = int(configs["patience"])
-threshold = float(configs["threshold"])
 
-seed = int(configs["seed"])
+proLocal.load_state_dict(torch.load(model_path))
+proLocal.eval()
 
-torch.manual_seed(seed)
-random.seed(seed)
+output_json = {}
 
-proLocal = ProLocal(state_label_weights)
-# proLocal.apply(weights_init)
+with torch.no_grad():
+	correct_state_label = 0
+	total_state_label = 0
 
-if configs["num_labeled_samples"] != "all":
-	train_samples = random.sample(train_samples, int(configs["num_labeled_samples"]))
+	sum_loss = 0.0
 
-optimizer = torch.optim.Adadelta(proLocal.parameters(), lr = 0.2, rho = 0.95)
-max_epochs = configs["max_epochs"]
+	state_label_cm = [[0] * 4 for _ in range(4)]
 
-output_json = {
-	"training_outputs": []
-}
+	fpTest = open("test_preds.txt", "w")
 
-# max_acc = 0.
+	for test_sample in test_samples:
+		pred_state_change = proLocal(test_sample)
 
-max_f1 = 0.
-max_f1_epoch = 0
-
-# Train the model
-for epoch in range(1, max_epochs + 1):
-	if max_f1_epoch + patience < epoch and max_f1 > threshold:
-		break
-
-	random.shuffle(train_samples)
-
-	for i, train_sample in enumerate(train_samples):
-		pred_state_change = proLocal(train_sample)
-
-		state_label_id = get_state_label_id(train_sample["state_label"])
+		state_label_id = get_state_label_id(test_sample["state_label"])
 
 		loss = proLocal.loss(state_label_id)
 
-		optimizer.zero_grad()
-		loss.backward()
-		optimizer.step()
+		_, pred_state_label = torch.max(pred_state_change.data, 1)
+		
+		if pred_state_label[0] == get_state_label_id(test_sample["state_label"])[0]:
+			correct_state_label += 1
 
-		if (i + 1) % 500 == 0:
-			print("Epoch [{}/{}], Step [{}/{}], Loss: {:.3f}".format(epoch, max_epochs, i + 1, len(train_samples), loss.item()))
+		state_label_cm[int(pred_state_label[0])][get_state_label_id(test_sample["state_label"])[0]] += 1
 
-	# proLocal.print_debug = True
+		total_state_label += 1
 
-	with torch.no_grad():
-		correct_state_label = 0
-		total_state_label = 0
+		sum_loss += loss
 
-		sum_loss = 0.0
+		fpTest.write("Sentence: %s, participant: %s\n" % (test_sample["text"], test_sample["participant"]))
+		fpTest.write("True state change: %s, predicted: %s\n" % (state_label_id, pred_state_change))
 
-		state_label_cm = [[0] * 4 for _ in range(4)]
+	fpTest.close()
 
-		fpDev = open("dev_preds_epoch%d.txt" % (epoch), "w")
+	acc = 100. * float(correct_state_label) / float(total_state_label)
+	f1 = cal_f1(state_label_cm)
 
-		for i, dev_sample in enumerate(dev_samples):
-			pred_state_change = proLocal(dev_sample)
+	print("Test accuracy is: {:.3f}%, Avg loss = {:.3f}, F1 = {:.3f}"
+		.format(acc, sum_loss / float(total_state_label), f1))
+	print("State label confusion matrix: ", state_label_cm)
+	print("\n\n=========================================================\n\n")
 
-			# sys.exit()
-
-			state_label_id = get_state_label_id(dev_sample["state_label"])
-
-			loss = proLocal.loss(state_label_id)
-
-			_, pred_state_label = torch.max(pred_state_change.data, 1)
-			
-			if pred_state_label[0] == get_state_label_id(dev_sample["state_label"])[0]:
-				correct_state_label += 1
-
-			state_label_cm[int(pred_state_label[0])][get_state_label_id(dev_sample["state_label"])[0]] += 1
-
-			total_state_label += 1
-
-			sum_loss += loss
-
-			fpDev.write("Sentence: %s, participant: %s\n" % (dev_sample["text"], dev_sample["participant"]))
-			fpDev.write("True state change: %s, predicted: %s\n" % (state_label_id, pred_state_change))
-
-		fpDev.close()
-
-		acc = 100. * float(correct_state_label) / float(total_state_label)
-		f1 = cal_f1(state_label_cm)
-
-		print("Validation accuracy is: {:.3f}%, Avg loss = {:.3f}, F1 = {:.3f}"
-			.format(acc, sum_loss / float(total_state_label), f1))
-		print("State label confusion matrix: ", state_label_cm)
-		print("\n\n=========================================================\n\n")
-
-		output_json["training_outputs"].append({
-					"epoch": epoch,
-					"accuracy": acc,
-					"f1": f1,
-					"cm": state_label_cm
-				})
-
-		# if acc > max_acc:
-		# 	max_acc = acc
-		# 	max_acc_epoch = epoch
-		# 	max_acc_f1 = f1
-
-		if f1 > max_f1:
-			max_f1 = f1
-			max_f1_epoch = epoch
-			max_f1_acc = acc
-
-		torch.save(proLocal.state_dict(), model_path + "epoch%03d.pt" % (epoch))
-
-# output_json["max_acc"] = {
-# 	"acc": max_acc,
-# 	"epoch": max_acc_epoch,
-# 	"f1": max_acc_f1
-# }
-
-output_json["max_f1"] = {
-	"f1": max_f1,
-	"epoch": max_f1_epoch,
-	"acc": max_f1_acc
-}
+output_json["f1"] = f1
+output_json["acc"] = acc
+output_json["cm"] = state_label_cm
 
 with open(output_path, "w") as fp:
 	json.dump(output_json, fp, indent = 4)
