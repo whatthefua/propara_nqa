@@ -1,8 +1,8 @@
 {
 	"max_epochs": 100,
-	"output_path": "outputs/sc_20_512_0_t4.json",
-	"model_path": "models/sc_20_512_0_t4/",
-	"num_labeled_samples": "512",
+	"output_path": "outputs/sc_20_all_0_t4.json",
+	"model_path": "models/sc_20_all_0_t4/",
+	"num_labeled_samples": "all",
 	"patience": 5,
 	"threshold": 0.4,
 	"seed": 4

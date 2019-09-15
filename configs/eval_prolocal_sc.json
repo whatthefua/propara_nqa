@@ -1,4 +1,4 @@
 {
-	"output_path": "test_outputs/sc_20_512_0_t4.json",
-	"model_path": "models/sc_20_512_0_t4/epoch015.pt"
+	"output_path": "test_outputs/sc_20_all_0_t4.json",
+	"model_path": "models/sc_20_all_0_t4/epoch006.pt"
 }

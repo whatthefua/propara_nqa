@@ -4,11 +4,11 @@
 	"num_labeled_samples": "all",
 	"num_unlabeled_samples": "all",
 	"emb_size": 20,
-	"visit_weight": 1,
-	"walker_weight": 1,
-	"output_path": "outputs/association_256_20_all_all_t0.json",
-	"model_path": "models/association_256_20_all_all_t0/",
+	"visit_weight": 0.2,
+	"walker_weight": 0.2,
+	"output_path": "new_outputs/association_256_20_all_all_t4.json",
+	"model_path": "new_outputs/association_256_20_all_all_t4/",
 	"patience": 100,
 	"threshold": 0.4,
-	"seed": 0
+	"seed": 4
 }

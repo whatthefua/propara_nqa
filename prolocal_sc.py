@@ -159,7 +159,7 @@ output_json = {
 	"training_outputs": []
 }
 
-# max_acc = 0.
+max_acc = 0.
 
 max_f1 = 0.
 max_f1_epoch = 0
@@ -237,10 +237,10 @@ for epoch in range(1, max_epochs + 1):
 					"cm": state_label_cm
 				})
 
-		# if acc > max_acc:
-		# 	max_acc = acc
-		# 	max_acc_epoch = epoch
-		# 	max_acc_f1 = f1
+		if acc > max_acc:
+			max_acc = acc
+			max_acc_epoch = epoch
+			max_acc_f1 = f1
 
 		if f1 > max_f1:
 			max_f1 = f1
@@ -249,11 +249,11 @@ for epoch in range(1, max_epochs + 1):
 
 		torch.save(proLocal.state_dict(), model_path + "epoch%03d.pt" % (epoch))
 
-# output_json["max_acc"] = {
-# 	"acc": max_acc,
-# 	"epoch": max_acc_epoch,
-# 	"f1": max_acc_f1
-# }
+output_json["max_acc"] = {
+	"acc": max_acc,
+	"epoch": max_acc_epoch,
+	"f1": max_acc_f1
+}
 
 output_json["max_f1"] = {
 	"f1": max_f1,

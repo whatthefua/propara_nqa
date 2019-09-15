@@ -1,5 +1,5 @@
 {
 	"output_path": "new_outputs/test_association_256_20_all_all_t4.json",
-	"model_path": "new_outputs/association_256_20_all_all_t4/iteration00360.pt",
+	"model_path": "new_outputs/association_256_20_all_all_t4/iteration00220.pt",
 	"emb_size": 20
 }

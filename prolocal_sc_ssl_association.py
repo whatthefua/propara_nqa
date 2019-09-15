@@ -136,7 +136,7 @@ class ProLocal(nn.Module):
 		return visit_loss
 
 	def walker_loss(self, labeled_embs, labels, unlabeled_embs):
-		labels_torch = torch.from_numpy(labels)
+		labels_torch = torch.from_numpy(labels).view(1, -1)
 		eq_matrix = labels_torch.expand(labels.size, labels.size).eq(labels_torch.t().expand(labels.size, labels.size)).float()
 		p_target = eq_matrix / torch.sum(eq_matrix, dim = 1).float()
 
@@ -202,7 +202,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Using device: %s" % device)
 
 max_iterations = configs["max_iterations"]
-iteration_size = configs["iteration_size"]
+labeled_iteration_size = configs["labeled_iteration_size"]
+unlabeled_iteration_size = configs["unlabeled_iteration_size"]
 output_path = configs["output_path"]
 model_path = configs["model_path"]
 patience = int(configs["patience"])
@@ -234,9 +235,9 @@ output_json = {
 	"training_outputs": []
 }
 
-# max_acc = 0.
-# max_acc_f1 = 0.
-# max_acc_iteration = 0
+max_acc = 0.
+max_acc_f1 = 0.
+max_acc_iteration = 0
 
 max_f1 = 0.
 max_f1_acc = 0.
@@ -247,8 +248,8 @@ for iteration in range(1, max_iterations + 1):
 	if max_f1_iteration + patience < iteration and max_f1 > threshold:
 		break
 
-	train_samples_batch = random.sample(train_samples, iteration_size)
-	unlabeled_samples_batch = random.sample(unlabeled_samples, iteration_size)
+	train_samples_batch = random.sample(train_samples, labeled_iteration_size)
+	unlabeled_samples_batch = random.sample(unlabeled_samples, unlabeled_iteration_size)
 	# sum_loss = 0.
 
 	loss = proLocal.loss(train_samples_batch, unlabeled_samples_batch, visit_weight, walker_weight)
@@ -312,10 +313,10 @@ for iteration in range(1, max_iterations + 1):
 					"cm": state_label_cm
 				})
 
-			# if acc > max_acc:
-			# 	max_acc = acc
-			# 	max_acc_iteration = iteration
-			# 	max_acc_f1 = f1
+			if acc > max_acc:
+				max_acc = acc
+				max_acc_iteration = iteration
+				max_acc_f1 = f1
 
 			if f1 > max_f1:
 				max_f1 = f1
@@ -324,11 +325,11 @@ for iteration in range(1, max_iterations + 1):
 
 		torch.save(proLocal.state_dict(), model_path + "iteration%05d.pt" % (iteration))
 
-# output_json["max_acc"] = {
-# 	"acc": max_acc,
-# 	"iteration": max_acc_iteration,
-# 	"f1": max_acc_f1
-# }
+output_json["max_acc"] = {
+	"acc": max_acc,
+	"iteration": max_acc_iteration,
+	"f1": max_acc_f1
+}
 
 output_json["max_f1"] = {
 	"f1": max_f1,
