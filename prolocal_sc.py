@@ -129,9 +129,6 @@ with open("data/dev_samples.pkl", "rb") as fp:
 with open("configs/prolocal_sc.json", "r") as fp:
 	configs = json.load(fp)
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print("Using device: %s" % device)
-
 # state_label_weights = np.array([2.4632272228320526, 4.408644400785855, 7.764705882352941, 4.194392523364486])
 # state_label_weights = np.array([math.sqrt(2.4632272228320526), math.sqrt(4.408644400785855), math.sqrt(7.764705882352941), math.sqrt(4.194392523364486)])
 state_label_weights = np.ones((4,))
@@ -160,13 +157,14 @@ output_json = {
 }
 
 max_acc = 0.
+max_acc_epoch = 0
 
 max_f1 = 0.
 max_f1_epoch = 0
 
 # Train the model
 for epoch in range(1, max_epochs + 1):
-	if max_f1_epoch + patience < epoch and max_f1 > threshold:
+	if max_acc_epoch + patience < epoch and max_acc > threshold:
 		break
 
 	random.shuffle(train_samples)
@@ -182,7 +180,7 @@ for epoch in range(1, max_epochs + 1):
 		loss.backward()
 		optimizer.step()
 
-		if (i + 1) % 500 == 0:
+		if (i + 1) % 100 == 0:
 			print("Epoch [{}/{}], Step [{}/{}], Loss: {:.3f}".format(epoch, max_epochs, i + 1, len(train_samples), loss.item()))
 
 	# proLocal.print_debug = True

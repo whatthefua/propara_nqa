@@ -1172,14 +1172,15 @@ class BertForSequenceClassification(BertPreTrainedModel):
     logits = model(input_ids, token_type_ids, input_mask)
     ```
     """
-    def __init__(self, config, num_labels=2, output_attentions=False, keep_multihead_output=False):
+    def __init__(self, config, num_labels=2, embedding_size = 20, output_attentions=False, keep_multihead_output=False):
         super(BertForSequenceClassification, self).__init__(config)
         self.output_attentions = output_attentions
         self.num_labels = num_labels
         self.bert = BertModel(config, output_attentions=output_attentions,
                                       keep_multihead_output=keep_multihead_output)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
-        self.classifier = nn.Linear(config.hidden_size, num_labels)
+        self.fc1 = nn.Linear(config.hidden_size, embedding_size)
+        self.fc2 = nn.Linear(embedding_size, num_labels)
         self.apply(self.init_bert_weights)
 
     def forward(self, input_ids, token_type_ids=None, attention_mask=None, labels=None, head_mask=None):
@@ -1192,7 +1193,8 @@ class BertForSequenceClassification(BertPreTrainedModel):
         self.embedding_layer = pooled_output
 
         dropped_output = self.dropout(pooled_output)
-        logits = self.classifier(dropped_output)
+        self.embedding = self.fc1(dropped_output)
+        logits = self.fc2(self.embedding)
 
         if labels is not None:
             loss_fct = CrossEntropyLoss()
@@ -1200,7 +1202,6 @@ class BertForSequenceClassification(BertPreTrainedModel):
             return loss
             
         return logits
-
 
 class BertForMultipleChoice(BertPreTrainedModel):
     """BERT model for multiple choice tasks.

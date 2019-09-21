@@ -119,10 +119,7 @@ class ProLocal(nn.Module):
 		return loss_state_change_label
 
 	def visit_loss(self, labeled_embs, unlabeled_embs):
-		labeled_embs_torch = torch.from_numpy(labeled_embs).view(-1, self.emb_size)
-		unlabeled_embs_torch = torch.from_numpy(unlabeled_embs).view(-1, self.emb_size)
-
-		sim_ab = torch.mm(labeled_embs_torch, torch.t(unlabeled_embs_torch))
+		sim_ab = torch.mm(labeled_embs, torch.t(unlabeled_embs))
 		p_ab = torch.nn.functional.softmax(sim_ab)
 		p_ab_nonzero = torch.add(p_ab, 1e-8)
 
@@ -136,14 +133,10 @@ class ProLocal(nn.Module):
 		return visit_loss
 
 	def walker_loss(self, labeled_embs, labels, unlabeled_embs):
-		labels_torch = torch.from_numpy(labels).view(1, -1)
-		eq_matrix = labels_torch.expand(labels.size, labels.size).eq(labels_torch.t().expand(labels.size, labels.size)).float()
+		eq_matrix = labels.expand(labels.shape[1], labels.shape[1]).eq(labels.t().expand(labels.shape[1], labels.shape[1])).float()
 		p_target = eq_matrix / torch.sum(eq_matrix, dim = 1).float()
 
-		labeled_embs_torch = torch.from_numpy(labeled_embs).view(-1 ,self.emb_size)
-		unlabeled_embs_torch = torch.from_numpy(unlabeled_embs).view(-1, self.emb_size)
-
-		sim_ab = torch.mm(labeled_embs_torch, unlabeled_embs_torch.t())
+		sim_ab = torch.mm(labeled_embs, unlabeled_embs.t())
 		p_ab = torch.nn.functional.softmax(sim_ab)
 		p_ba = torch.nn.functional.softmax(sim_ab.t())
 		p_aba = torch.mm(p_ab, p_ba)
@@ -155,7 +148,8 @@ class ProLocal(nn.Module):
 		return walker_loss
 
 	def loss(self, labeled_samples, unlabeled_samples, visit_weight = 1., walker_weight = 1.):
-		losses = []
+		loss = None
+		loss_empty = True
 
 		labeled_embs = []
 		unlabeled_embs = []
@@ -164,26 +158,30 @@ class ProLocal(nn.Module):
 		# calculate ce loss
 		for labeled_sample in labeled_samples:
 			self(labeled_sample)
-			labeled_embs.append(self.emb.detach().numpy())
+			labeled_embs.append(self.emb)
 			labels.append(get_state_label_id(labeled_sample["state_label"])[0])
 
-			losses.append(proLocal.ce_loss(get_state_label_id(labeled_sample["state_label"])))
+			if loss_empty:
+				loss = self.ce_loss(get_state_label_id(labeled_sample["state_label"]))
+				loss_empty = False
+			else:
+				loss += self.ce_loss(get_state_label_id(labeled_sample["state_label"]))
 
 		for unlabeled_sample in unlabeled_samples:
 			self(unlabeled_sample)
-			unlabeled_embs.append(self.emb.detach().numpy())
+			unlabeled_embs.append(self.emb)
 
-		labeled_embs = np.array(labeled_embs)
-		unlabeled_embs = np.array(unlabeled_embs)
-		labels = np.array(labels)
+		labeled_embs = torch.cat(labeled_embs, dim = 0)
+		unlabeled_embs = torch.cat(unlabeled_embs, dim = 0)
+		labels = torch.tensor(labels).view(1, -1)
 
 		# calculate visit loss
-		losses.append(torch.mul(self.visit_loss(labeled_embs, unlabeled_embs), visit_weight))
+		loss += torch.mul(self.visit_loss(labeled_embs, unlabeled_embs), visit_weight)
 
 		# calculate walker loss
-		losses.append(torch.mul(self.walker_loss(labeled_embs, labels, unlabeled_embs), walker_weight))
+		loss += torch.mul(self.walker_loss(labeled_embs, labels, unlabeled_embs), walker_weight)
 
-		return sum(losses)
+		return loss
 		
 
 with open("data/train_samples.pkl", "rb") as fp:
@@ -202,8 +200,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Using device: %s" % device)
 
 max_iterations = configs["max_iterations"]
-labeled_iteration_size = configs["labeled_iteration_size"]
-unlabeled_iteration_size = configs["unlabeled_iteration_size"]
+labeled_iteration_size = int(configs["labeled_iteration_size"])
+unlabeled_iteration_size = int(configs["unlabeled_iteration_size"])
 output_path = configs["output_path"]
 model_path = configs["model_path"]
 patience = int(configs["patience"])
