@@ -70,19 +70,19 @@ class ProLocal(nn.Module):
 		verb_tags = torch.from_numpy(sample["verb_tags"]).view(-1, 1, 1)
 		entity_tags = torch.from_numpy(sample["entity_tags"]).view(-1, 1, 1)
 
-		input_tensor = torch.cat((gloves, verb_tags, entity_tags), 2).float()
+		input_tensor = torch.cat((gloves, verb_tags, entity_tags), 2).float().cuda()
 
 		# hidden word embeddings
 		hidden, _ = self.lstm(input_tensor)
 
-		verb_weights = verb_tags.float() / (verb_tags.float().sum(-1).unsqueeze(-1) + 1e-13)
+		verb_weights = verb_tags.float().cuda() / (verb_tags.float().sum(-1).unsqueeze(-1) + 1e-13).cuda()
 		verb_hidden = (hidden * verb_weights).sum(dim = 0)
 
 		if self.print_debug:
 			print("w_verb", verb_weights)
 			print("verb", verb_hidden)
 
-		entity_weights = entity_tags.float() / (entity_tags.float().sum(-1).unsqueeze(-1) + 1e-13)
+		entity_weights = entity_tags.float().cuda() / (entity_tags.float().sum(-1).unsqueeze(-1) + 1e-13).cuda()
 		entity_hidden = (hidden * entity_weights).sum(dim = 0)
 
 		entity_verb_hidden = torch.cat((entity_hidden, verb_hidden), 0).float().view(-1, 1, 200)
@@ -110,7 +110,7 @@ class ProLocal(nn.Module):
 		return self.state_change_label_prob
 
 	def loss(self, state_change_label):
-		state_change_label = torch.from_numpy(state_change_label).view(-1).long()
+		state_change_label = torch.from_numpy(state_change_label).view(-1).long().cuda()
 
 		loss_state_change_label = nn.CrossEntropyLoss()(self.state_change_label_logits, state_change_label)
 
@@ -129,7 +129,7 @@ print("Using device: %s" % device)
 # state_label_weights = np.array([math.sqrt(2.4632272228320526), math.sqrt(4.408644400785855), math.sqrt(7.764705882352941), math.sqrt(4.194392523364486)])
 state_label_weights = np.ones((4,))
 
-proLocal = ProLocal(emb_size = configs["emb_size"])
+proLocal = ProLocal(emb_size = configs["emb_size"]).cuda()
 # proLocal.apply(weights_init)
 
 output_path = configs["output_path"]

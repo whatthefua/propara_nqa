@@ -1,4 +1,5 @@
 {
-	"output_path": "test_outputs/sc_20_all_0_t4.json",
-	"model_path": "models/sc_20_all_0_t4/epoch006.pt"
+	"output_path": "test_outputs/association_old_all_all_t0.json",
+	"model_path": "models/association_old_all_all_t0/iteration00300.pt",
+	"emb_size": 20
 }

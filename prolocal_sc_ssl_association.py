@@ -72,19 +72,19 @@ class ProLocal(nn.Module):
 		verb_tags = torch.from_numpy(sample["verb_tags"]).view(-1, 1, 1)
 		entity_tags = torch.from_numpy(sample["entity_tags"]).view(-1, 1, 1)
 
-		input_tensor = torch.cat((gloves, verb_tags, entity_tags), 2).float()
+		input_tensor = torch.cat((gloves, verb_tags, entity_tags), 2).float().cuda()
 
 		# hidden word embeddings
 		hidden, _ = self.lstm(input_tensor)
 
-		verb_weights = verb_tags.float() / (verb_tags.float().sum(-1).unsqueeze(-1) + 1e-13)
+		verb_weights = verb_tags.float().cuda() / (verb_tags.float().sum(-1).unsqueeze(-1) + 1e-13).cuda()
 		verb_hidden = (hidden * verb_weights).sum(dim = 0)
 
 		if self.print_debug:
 			print("w_verb", verb_weights)
 			print("verb", verb_hidden)
 
-		entity_weights = entity_tags.float() / (entity_tags.float().sum(-1).unsqueeze(-1) + 1e-13)
+		entity_weights = entity_tags.float().cuda() / (entity_tags.float().sum(-1).unsqueeze(-1) + 1e-13).cuda()
 		entity_hidden = (hidden * entity_weights).sum(dim = 0)
 
 		entity_verb_hidden = torch.cat((entity_hidden, verb_hidden), 0).float().view(-1, 1, 200)
@@ -112,9 +112,9 @@ class ProLocal(nn.Module):
 		return self.state_change_label_prob
 
 	def ce_loss(self, state_change_label):
-		state_change_label = torch.from_numpy(state_change_label).view(-1).long()
+		state_change_label = torch.from_numpy(state_change_label).view(-1).long().cuda()
 
-		loss_state_change_label = nn.CrossEntropyLoss()(self.state_change_label_logits, state_change_label)
+		loss_state_change_label = nn.CrossEntropyLoss().cuda()(self.state_change_label_logits, state_change_label)
 
 		return loss_state_change_label
 
@@ -125,7 +125,7 @@ class ProLocal(nn.Module):
 
 		p_ab_log = torch.nn.functional.log_softmax(p_ab_nonzero)
 
-		p_target = torch.tensor((), dtype = torch.float32)
+		p_target = torch.tensor((), dtype = torch.float32).cuda()
 		p_target = p_target.new_full(p_ab_nonzero.size(), 1. / float(unlabeled_embs.shape[0]))
 
 		visit_loss = torch.mean(torch.sum(-p_target * p_ab_log, dim = 1))
@@ -133,7 +133,7 @@ class ProLocal(nn.Module):
 		return visit_loss
 
 	def walker_loss(self, labeled_embs, labels, unlabeled_embs):
-		eq_matrix = labels.expand(labels.shape[1], labels.shape[1]).eq(labels.t().expand(labels.shape[1], labels.shape[1])).float()
+		eq_matrix = labels.expand(labels.shape[1], labels.shape[1]).eq(labels.t().expand(labels.shape[1], labels.shape[1])).float().cuda()
 		p_target = eq_matrix / torch.sum(eq_matrix, dim = 1).float()
 
 		sim_ab = torch.mm(labeled_embs, unlabeled_embs.t())
@@ -171,9 +171,9 @@ class ProLocal(nn.Module):
 			self(unlabeled_sample)
 			unlabeled_embs.append(self.emb)
 
-		labeled_embs = torch.cat(labeled_embs, dim = 0)
-		unlabeled_embs = torch.cat(unlabeled_embs, dim = 0)
-		labels = torch.tensor(labels).view(1, -1)
+		labeled_embs = torch.cat(labeled_embs, dim = 0).cuda()
+		unlabeled_embs = torch.cat(unlabeled_embs, dim = 0).cuda()
+		labels = torch.tensor(labels).view(1, -1).cuda()
 
 		# calculate visit loss
 		loss += torch.mul(self.visit_loss(labeled_embs, unlabeled_embs), visit_weight)
@@ -215,7 +215,7 @@ random.seed(seed)
 # state_label_weights = np.array([math.sqrt(2.4632272228320526), math.sqrt(4.408644400785855), math.sqrt(7.764705882352941), math.sqrt(4.194392523364486)])
 # state_label_weights = np.ones((4,))
 
-proLocal = ProLocal(emb_size = configs["emb_size"])
+proLocal = ProLocal(emb_size = configs["emb_size"]).cuda()
 # proLocal.apply(weights_init)
 
 optimizer = torch.optim.Adadelta(proLocal.parameters(), lr = 0.2, rho = 0.95)
@@ -243,7 +243,7 @@ max_f1_iteration = 0
 
 # Train the model (semi-supervised)
 for iteration in range(1, max_iterations + 1):
-	if max_f1_iteration + patience < iteration and max_f1 > threshold:
+	if max_acc_iteration + patience < iteration and max_acc > threshold:
 		break
 
 	train_samples_batch = random.sample(train_samples, labeled_iteration_size)
@@ -258,7 +258,7 @@ for iteration in range(1, max_iterations + 1):
 
 	# 	sum_loss += loss.item()
 
-	print("Iteration [{}/{}], Avg Loss: {:.3f}".format(iteration, max_iterations, loss.item() / float(iteration_size * 2)))
+	print("Iteration [{}/{}], Avg Loss: {:.3f}".format(iteration, max_iterations, loss.item() / float(labeled_iteration_size + unlabeled_iteration_size)))
 
 	# proLocal.print_debug = True
 

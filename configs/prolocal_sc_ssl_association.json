@@ -1,14 +1,15 @@
 {
 	"max_iterations": 1000,
-	"iteration_size": 256,
+	"labeled_iteration_size": 32,
+	"unlabeled_iteration_size": 32,
 	"num_labeled_samples": "all",
 	"num_unlabeled_samples": "all",
 	"emb_size": 20,
-	"visit_weight": 0.2,
-	"walker_weight": 0.2,
-	"output_path": "new_outputs/association_256_20_all_all_t4.json",
-	"model_path": "new_outputs/association_256_20_all_all_t4/",
+	"visit_weight": 0.0,
+	"walker_weight": 0.0,
+	"output_path": "outputs/sc_tsne_all_all_t0.json",
+	"model_path": "models/sc_tsne_all_all_t0/",
 	"patience": 100,
-	"threshold": 0.4,
-	"seed": 4
+	"threshold": 43,
+	"seed": 0
 }
